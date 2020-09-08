@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarmonySite", "HarmonySite\HarmonySite.csproj", "{DE4F6335-DD94-42F1-9189-E411DFDE965C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{27283EF9-9402-4803-A56B-4161999A718F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{F9D9271E-4AC5-4B8D-8193-2219E8911A70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE4F6335-DD94-42F1-9189-E411DFDE965C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE4F6335-DD94-42F1-9189-E411DFDE965C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE4F6335-DD94-42F1-9189-E411DFDE965C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE4F6335-DD94-42F1-9189-E411DFDE965C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27283EF9-9402-4803-A56B-4161999A718F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27283EF9-9402-4803-A56B-4161999A718F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27283EF9-9402-4803-A56B-4161999A718F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27283EF9-9402-4803-A56B-4161999A718F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9D9271E-4AC5-4B8D-8193-2219E8911A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9D9271E-4AC5-4B8D-8193-2219E8911A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9D9271E-4AC5-4B8D-8193-2219E8911A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9D9271E-4AC5-4B8D-8193-2219E8911A70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99EC57BF-3243-40F5-BE84-A3663013835B}
+	EndGlobalSection
+EndGlobal
