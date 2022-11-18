@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,12 +9,17 @@
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.7.4" />
-    <PackageReference Include="NLog.Config" Version="4.7.4" />
     <PackageReference Include="NLog.Schema" Version="4.7.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HarmonySite\HarmonySite.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

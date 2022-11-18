@@ -2,7 +2,7 @@
   "profiles": {
     "Example": {
       "commandName": "Project",
-      "commandLineArgs": "https://www.baden.st rjones"
+      "commandLineArgs": "https://club.baden.st rjones"
     }
   }
 }

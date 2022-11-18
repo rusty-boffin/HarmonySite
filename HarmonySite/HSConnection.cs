@@ -76,14 +76,13 @@ namespace RustyBoffin.HarmonySite
                 if (string.IsNullOrEmpty(table))
                     request = string.Format("api?endpoint=config&output=xml&token={0}", _Token);
                 else if (string.IsNullOrEmpty(filter))
-                    request = string.Format("api?endpoint=browse&output=xml&token={0}&table={1}&n=10&start={2}", _Token, table, start);
+                    request = string.Format("api?endpoint=browse&output=xml&token={0}&table={1}&n=10&startrec={2}", _Token, table, start);
                 else
-                    request = string.Format("api?endpoint=browse&output=xml&token={0}&table={1}&{2}={3}&n=10&start={4}", _Token, table, filter, id, start);
+                    request = string.Format("api?endpoint=browse&output=xml&token={0}&table={1}&{2}={3}&n=10&startrec={4}", _Token, table, filter, id, start);
                 _Logger.Trace(request);
                 HttpResponseMessage reply = await _Client.GetAsync(request);
                 if (!reply.IsSuccessStatusCode)
                     return null;
-
 
                 string XML = await reply.Content.ReadAsStringAsync();
                 _Logger.Trace(XML);

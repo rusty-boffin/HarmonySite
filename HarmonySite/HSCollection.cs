@@ -23,12 +23,13 @@ namespace RustyBoffin.HarmonySite
 
         internal void Load(string values)
         {
-            foreach (string value in values.Split(' '))
-            {
-                T val = (T)ConvertToType(value, typeof(T));
-                if (!_Members.Contains(val))
-                    _Members.Add(val);
-            }
+            if (!String.IsNullOrEmpty(values))
+                foreach (string value in values.Split(' '))
+                {
+                    T val = (T)ConvertToType(value, typeof(T));
+                    if (!_Members.Contains(val))
+                        _Members.Add(val);
+                }
         }
 
         internal void Load(string filter, int id)
