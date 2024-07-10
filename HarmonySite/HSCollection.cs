@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Syncfusion.XlsIO.Implementation.XmlSerialization;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,15 +11,29 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
 namespace RustyBoffin.HarmonySite
 {
-    public class HSCollection<T> : HSBase, IEnumerable<T>
+    public class HSCollection<T> : HSBase, IEnumerable<T> where T: HSObject
     {
         protected string _Table;
+        private bool isLocal = false;
         protected List<T> _Members = new List<T>();
 
         public HSCollection(HSSession session)
             : base(session)
         {
-            _Table = typeof(T).GetCustomAttribute<HSTableAttribute>()?.TableName;
+            HSTableAttribute? attr = typeof(T).GetCustomAttribute<HSTableAttribute>();
+            if (attr == null)
+                _Table = typeof(T).Name;
+            else
+            {
+                _Table = attr.TableName;
+                isLocal = attr.IsLocal;
+            }
+        }
+
+        internal void Load(T obj)
+        {
+            if (!_Members.Contains(obj))
+                _Members.Add(obj);
         }
 
         internal void Load(string values)
@@ -26,8 +41,8 @@ namespace RustyBoffin.HarmonySite
             foreach (string value in values.Split(' '))
             {
                 T val = (T)ConvertToType(value, typeof(T));
-                if (!_Members.Contains(val))
-                    _Members.Add(val);
+                if (val != null)
+                    Load(val);
             }
         }
 
@@ -35,17 +50,25 @@ namespace RustyBoffin.HarmonySite
         {
             if (_Table == null)
                 throw new Exception(string.Format("No table defined for {0}", typeof(T).Name));
-            var records = _Session.LoadData(_Table, filter, id);
-            foreach (var kvp in records)
+            if (isLocal)
+            { 
+                foreach (T obj in _Session.LoadLocalData<T>(_Table, filter, id))
+                    Load(obj);
+            } 
+            else
             {
-                T record = _Members.Where(r => { if (r is HSObject o) return (o.id == kvp.Key); return false; }).SingleOrDefault();
-                if (record == null)
+                var records = _Session.LoadData(_Table, filter, id);
+                foreach (var kvp in records)
                 {
-                    record = (T)_Session.GetValue(typeof(T), kvp.Key);
-                    _Members.Add(record);
+                    T record = _Members.Where(r => { if (r is HSObject o) return (o.id == kvp.Key); return false; }).SingleOrDefault();
+                    if (record == null)
+                    {
+                        record = (T)_Session.GetValue(typeof(T), kvp.Key);
+                        Load(record);
+                    }
+                    if (record is HSObject o)
+                        o.Load(kvp.Value);
                 }
-                if (record is HSObject o)
-                    o.Load(kvp.Value);
             }
         }
 

@@ -106,8 +106,6 @@ namespace RustyBoffin.HarmonySite.Data
         public HSCollection<EventFilesResource> Resources => GetValues(() => Resources);
         [HSFilter(nameof(EventProgramItem.Event))]
         public HSCollection<EventProgramItem> ProgramItems => GetValues(() => ProgramItems);
-        [HSFilter(nameof(Membership.Event))]
-        public HSCollection<Membership> Memberships => GetValues(() => Memberships);
 
         internal Event(HSSession session)
             : base(session)

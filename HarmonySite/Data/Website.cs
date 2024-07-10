@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
@@ -8,9 +9,6 @@ namespace RustyBoffin.HarmonySite.Data
     public class Website : HSObject
     {
         public string WebsiteName => GetValue(() => WebsiteName);
-        public Color colour1 => GetValue(() => colour1);
-        public Color colour2 => GetValue(() => colour2);
-        public string ChapterName => GetValue(() => ChapterName);
 
         [HSFilter]
         public HSCollection<BannersHomepage> Banners => GetValues(() => Banners);
@@ -20,6 +18,8 @@ namespace RustyBoffin.HarmonySite.Data
         public HSCollection<Member> Members => GetValues(() => Members);
         [HSFilter]
         public HSCollection<Ensemble> Ensembles => GetValues(() => Ensembles);
+        [HSFilter]
+        public HSCollection<Club> Clubs => GetValues(() => Clubs);
         [HSFilter]
         public HSCollection<HitLog> HitLogs => GetValues(() => HitLogs);
         [HSFilter]
@@ -44,6 +44,9 @@ namespace RustyBoffin.HarmonySite.Data
         internal Website(HSSession session)
             : base(session)
         {
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add(nameof(WebsiteName), session.Connection.Uri.Host);
+            Initialise(values);
         }
     }
 }

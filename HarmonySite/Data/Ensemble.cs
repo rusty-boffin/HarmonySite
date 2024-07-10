@@ -41,9 +41,9 @@ namespace RustyBoffin.HarmonySite.Data
         public string Video => GetValue(() => Video);   //	YouTube Video URL	YouTube video ID	any value
         public string Blurb => GetValue(() => Blurb);   //	Promotional blurb	WYSIWYG (HTML) multi-line text box	any value
         public string PostalAddress => GetValue(() => PostalAddress);   //	Postal address	multi-line text box	any value
-        public HSCollection<int> TypeQ => GetValues(() => TypeQ);   //	Category	multiple options from restricted database	one of these values
+//        public HSCollection<int> TypeQ => GetValues(() => TypeQ);   //	Category	multiple options from restricted database	one of these values
         public string Grade => GetValue(() => Grade);   //	Grade	single option from hard-coded set of choices	one of these values
-        public HSCollection<string> Medals => GetValues(() => Medals); //	Medals won	multiple options from hard-coded set of choices	one of these values
+//        public HSCollection<string> Medals => GetValues(() => Medals); //	Medals won	multiple options from hard-coded set of choices	one of these values
         public string Results => GetValue(() => Results);   //	Historical competition results	WYSIWYG (HTML) multi-line text box	any value
         public string AdminNotes => GetValue(() => AdminNotes); //	Admin Notes	WYSIWYG (HTML) multi-line text box	any value
         public DateTime Registration => GetValue(() => Registration);   //	Registration date	date	any value
@@ -70,8 +70,6 @@ namespace RustyBoffin.HarmonySite.Data
 
         [HSFilter(nameof(MemberGrouping.Ensembles))]
         public HSCollection<MemberGrouping> MemberGroups => GetValues(() => MemberGroups);
-        [HSFilter(nameof(Membership.Ensemble))]
-        public HSCollection<Membership> Memberships => GetValues(() => Memberships);
         [HSFilter(nameof(Music.Ensembles))]
         public HSCollection<Music> Songs => GetValues(() => Songs);
         [HSFilter(nameof(Participation.Ensemble))]

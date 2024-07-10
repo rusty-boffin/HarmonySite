@@ -8,10 +8,12 @@ namespace RustyBoffin.HarmonySite
     public class HSTableAttribute : Attribute
     {
         public string TableName { get; }
+        public bool IsLocal { get; }
 
-        public HSTableAttribute(string tableName)
+        public HSTableAttribute(string tableName, bool isLocal = false)
         {
             TableName = tableName;
+            IsLocal = isLocal;
         }
     }
 }

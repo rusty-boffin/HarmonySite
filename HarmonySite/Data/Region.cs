@@ -3,7 +3,7 @@
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
 namespace RustyBoffin.HarmonySite.Data
 {
-    [HSTable("region")]
+    [HSTable("regions")]
     public class Region : HSObject
     {
         public int ImportID => GetValue(() => ImportID);    //	ID from imported table	integer	any number			
