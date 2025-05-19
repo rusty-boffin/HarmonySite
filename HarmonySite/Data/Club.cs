@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Syncfusion.XlsIO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using static System.Net.Mime.MediaTypeNames;
-using System.Linq;
+
+// Load CSV from https://www.barbershop.org.au/dbpage.php?pg=admin&dbase=clubs
 
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
 namespace RustyBoffin.HarmonySite.Data
 {
-    [HSTable("clubs", true)]
+    [HSTable("clubs", HSTableAttribute.eFeatures.Local)]
     public class Club : HSObject
     {
         public int ImportID => GetValue(() => ImportID);    // ID from imported table	integer	int(11)	-	any number
@@ -91,60 +87,7 @@ namespace RustyBoffin.HarmonySite.Data
             : base(session)
         {
         }
-
-        internal Club(HSSession session, IWorksheet ws, int row)
-            : this(session)
-        {
-            Dictionary<string, string> values = new Dictionary<string, string>();
-            id = Convert.ToInt32(ws[row, 1].Number);
-            values.Add(nameof(Name), ws[row, 2].Value);
-            values.Add(nameof(Type), ws[row, 3].Value);
-            values.Add(nameof(ExecName), ws[row, 5].Value);
-            values.Add(nameof(Address), ws[row, 6].Value);
-            values.Add(nameof(Area), ws[row, 7].Value);
-            values.Add(nameof(State), ws[row, 8].Value);
-            values.Add(nameof(Phone), ws[row, 9].Value);
-            values.Add(nameof(Registration), ws[row, 10].Value);
-            values.Add(nameof(LastPaid), ws[row, 11].Value);
-            values.Add(nameof(Expires), ws[row, 12].Value);
-            values.Add(nameof(Resigned), ws[row, 12].Value);
-            values.Add(nameof(stamp), DateTime.Now.ToString());
-            Load(values);
-        }
-        public static void Initialise(HSSession session)
-        {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            string[] s = asm.GetManifestResourceNames();
-
-            string site;
-            if (session.Connection.Uri.Host.EndsWith(".nz"))
-                site = "BHNZ";
-            else
-                site = "BHA";
-            string sheet = string.Format("{0}.clubs.xlsx", site);
-            string file = s.Single(r => r.EndsWith(sheet));
-            using (Stream fileStream = asm.GetManifestResourceStream(file))
-            {
-                using (ExcelEngine excelEngine = new ExcelEngine())
-                {
-                    IApplication application = excelEngine.Excel;
-                    application.DefaultVersion = ExcelVersion.Xlsx;
-
-                    IWorkbook workbook = application.Workbooks.Open(fileStream);
-                    if (workbook != null)
-                    {
-                        foreach (IWorksheet ws in workbook.Worksheets)
-                        {
-                            int row = 1;
-                            while (!ws[++row,1].IsBlank)
-                            {
-                                Club club = new Club(session, ws, row);
-                                session.Load(club);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        public bool IsParentBody => PeakBody == this;
+        public bool IsClubAtLarge => Name.Contains("at Large");
     }
 }

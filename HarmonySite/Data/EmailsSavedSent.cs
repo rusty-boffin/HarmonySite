@@ -10,6 +10,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string FromEmail => GetValue(() => FromEmail);   //	From email	text	any value
         public MemberGrouping Grouping => GetValue(() => Grouping); //	Select recipients from	single option from database table	values from groupings table
         public HSCollection<Member> Members => GetValues(() => Members);   //	Recipients - members	multiple options from database table	values from members table
+        public string MembersIn => GetValue(() => MembersIn);   //	Put the selected members' email addresses above into	text	any value
         public HSCollection<MailingList> MailingLists => GetValues(() => MailingLists); //	Recipients - mailing lists	multiple options from database table	values from mailinglists table
         public string To => GetValue(() => To); //	To	multi-line text box	any value
         public string CC => GetValue(() => CC); //	CC	multi-line text box	any value

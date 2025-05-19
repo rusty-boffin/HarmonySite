@@ -6,19 +6,19 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
 namespace RustyBoffin.HarmonySite.Data
 {
-    [HSTable("members")]
+    [HSTable("members", HSTableAttribute.eFeatures.Large)]
     public class Member : HSObject
     {
         public int ImportID => GetValue(() => ImportID);    //	ID from imported table	integer	any number			
-        public ListItem Pronoun => GetValue(() => Pronoun);   //	Pronoun	single option from database (dropdowns)	one of these values | Administer			
+        public string Pronoun => GetValue(() => Pronoun);   //	Pronoun	single option from database (dropdowns)	one of these values | Administer			
         public string Surname => GetValue(() => Surname);   //	Surname	text	any value			
         public string FirstName => GetValue(() => FirstName);   //	Given Names	text	any value			
         public string Greeting => GetValue(() => Greeting); //	First name	text	any value			
-        public ListItem Title => GetValue(() => Title);   //	Title	single option from database (dropdowns)	one of these values | Administer			
+        public string Title => GetValue(() => Title);   //	Title	single option from database (dropdowns)	one of these values | Administer			
         public string Occupation => GetValue(() => Occupation); //	Occupation	text	any value			
-        public ListItem Gender => GetValue(() => Gender); //	Gender	single option from database (dropdowns)	one of these values | Administer			
+        public string Gender => GetValue(() => Gender); //	Gender	single option from database (dropdowns)	one of these values | Administer			
         public string Height => GetValue(() => Height); //	Height	text	any value			
-//        public DateTime Birthday => GetValue(() => Birthday);   //	Date of birth	date	any value			
+        public DateTime Birthday => GetValue(() => Birthday);   //	Date of birth	date	any value			
         public string BirthDate => GetValue(() => BirthDate); //	Birthday	text	any value			
         public string Partner => GetValue(() => Partner);   //	Spouse/Partner	text	any value			
         public DateTime Anniversary => GetValue(() => Anniversary); //	Anniversary	date	any value			
@@ -59,16 +59,12 @@ namespace RustyBoffin.HarmonySite.Data
         public string MemSpare2 => GetValue(() => MemSpare2);   //	Spare field 2	text	any value			
         public string MemSpare3 => GetValue(() => MemSpare3);   //	Spare field 3	text	any value			
         public string MemSpare4 => GetValue(() => MemSpare4);   //	Spare field 4	text	any value		              
-        public ListItem COVIDVaccine => GetValue(() => COVIDVaccine);   // Vaccine received multiple options from database(dropdowns)  varchar(192)    -	one of these values | Administer
+        public string COVIDVaccine => GetValue(() => COVIDVaccine);   // Vaccine received multiple options from database(dropdowns)  varchar(192)    -	one of these values | Administer
         public int COVIDShots => GetValue(() => COVIDShots);    // Number of shots integer int (11)	-	any number
         public DateTime COVIDDate => GetValue(() => COVIDDate); // Date of last shot date    date	-	any value
         public string COVIDFile => GetValue(() => COVIDFile);   // Vaccination certificate file    varchar(192)    -	files with this specification
 
         [HSFilter(nameof(AnnouncementsReminder.PostedBy))]
-        public HSCollection<AnnouncementsReminder> Announcements => GetValues(() => Announcements);
-        [HSFilter(nameof(AttendanceAvailability.Member))]
-        public HSCollection<AttendanceAvailability> Attendances => GetValues(() => Attendances);
-        [HSFilter(nameof(CommitteeTeamDocument.PostedBy))]
         public HSCollection<CommitteeTeamDocument> Documents => GetValues(() => Documents);
         [HSFilter(nameof(EmailsSavedSent.Member))]
         public HSCollection<EmailsSavedSent> Emails => GetValues(() => Emails);
@@ -91,6 +87,8 @@ namespace RustyBoffin.HarmonySite.Data
             : base(session)
         {
         }
+
+        public string FullName =>$"{Greeting} {Surname}".Trim();
     }
 
 }

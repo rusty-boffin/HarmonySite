@@ -1,8 +1,6 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -10,14 +8,14 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
 namespace RustyBoffin.HarmonySite
 {
-    public abstract class HSObject: HSBase, IEquatable<HSObject>
+    public abstract class HSObject : HSBase, IEquatable<HSObject>
     {
-        private static Logger _Logger = NLog.LogManager.GetCurrentClassLogger();
+        protected static Logger _Logger = NLog.LogManager.GetCurrentClassLogger();
 
         private readonly string _Table;
         private readonly string _ClassName;
-        public int id { get; internal set; }
-        public  DateTime stamp { get; private set; }
+        public string id { get; internal set; }
+        public DateTime stamp { get; private set; }
 
         private Dictionary<string, string> _Values;
 
@@ -28,17 +26,9 @@ namespace RustyBoffin.HarmonySite
             _Table = GetType().GetCustomAttribute<HSTableAttribute>().TableName;
         }
 
-        protected void Initialise(Dictionary<string, string> values)
-        {
-            _Values = values;
-        }
-
         private Dictionary<string, object> _Collections = new Dictionary<string, object>();
-        protected HSCollection<T> GetValues<T>(Expression<Func<HSCollection<T>>> expression) where T: HSObject
+        protected HSCollection<T> GetValues<T>(Expression<Func<HSCollection<T>>> expression) where T : HSObject
         {
-            if (_Values == null)
-                Load();
-
             string propertyName = GetPropertyName(expression);
             Type propertyType = typeof(T);
             HSFilterAttribute attr = GetType().GetProperty(propertyName).GetCustomAttribute<HSFilterAttribute>();
@@ -62,18 +52,18 @@ namespace RustyBoffin.HarmonySite
                 if (!typeof(T).IsSubclassOf(typeof(HSObject)))
                     throw new Exception(string.Format("{0}.{1} - HSFilter attribute applied to non HarmonySite object collection", _ClassName, propertyName));
 
-                string filterTable = attr.FilterName;
-                if (!string.IsNullOrEmpty(filterTable))
+                string filterProperty = attr.FilterName;
+                if (!string.IsNullOrEmpty(filterProperty))
                 {
-                    PropertyInfo pi = propertyType.GetProperty(filterTable);
+                    PropertyInfo pi = propertyType.GetProperty(filterProperty);
                     if (pi == null)
-                        throw new Exception(string.Format("{0}.{1} - HSFilter {2}.{3} does not exist", _ClassName, propertyName, propertyType.Name, filterTable));
+                        throw new Exception(string.Format("{0}.{1} - HSFilter {2}.{3} does not exist", _ClassName, propertyName, propertyType.Name, filterProperty));
                     if (!pi.PropertyType.IsSubclassOf(typeof(HSBase)))
-                        throw new Exception(string.Format("{0}.{1} - HSFilter {2}.{3} is not a HarmonySite object", _ClassName, propertyName, propertyType.Name, filterTable));
+                        throw new Exception(string.Format("{0}.{1} - HSFilter {2}.{3} is not a HarmonySite object", _ClassName, propertyName, propertyType.Name, filterProperty));
                     if (pi.PropertyType.GetCustomAttribute<HSFilterAttribute>() != null)
-                        throw new Exception(string.Format("{0}.{1} - HSFilter {2}.{3} cannot be a collection that is already filtered", _ClassName, propertyName, propertyType.Name, filterTable));
+                        throw new Exception(string.Format("{0}.{1} - HSFilter {2}.{3} cannot be a collection that is already filtered", _ClassName, propertyName, propertyType.Name, filterProperty));
                 }
-                result.Load(filterTable, id);
+                result.Load(filterProperty, id);
             }
             else if (_Values.TryGetValue(propertyName, out s))
                 result.Load(s);
@@ -85,9 +75,6 @@ namespace RustyBoffin.HarmonySite
 
         internal T GetValue<T>(Expression<Func<T>> expression)
         {
-            if (_Values == null)
-                Load();
-
             string propertyName = GetPropertyName(expression);
             return GetValue<T>(propertyName);
         }
@@ -104,23 +91,35 @@ namespace RustyBoffin.HarmonySite
             return (T)result;
         }
 
+        internal string[] GetList<T>(Expression<Func<T>> expression)
+        {
+            string propertyName = GetPropertyName(expression);
+            return GetList(propertyName);
+        }
+
+        internal string[] GetList(string propertyName)
+        {
+            string values = GetValue<string>(propertyName);
+            return values.Split(' ');
+        }
+
         private static List<string> _MissingFields = new List<string>();
         private static List<string> _ExtraFields = new List<string>();
 
-        internal void Load(Dictionary<string, string> values = null)
+        internal void Load(Dictionary<string, string> values)
         {
             _Values = values;
-            if (_Values == null)
-            {
-                var records = _Session.LoadData(_Table, "id", id);
-                if (!records.TryGetValue(id, out _Values))
-                {
-                    _Values = new Dictionary<string, string>();
-                    stamp = DateTime.Now;
-                    return;
-                }
-            }
+        }
+        /*
+        internal void Load(tRecord record)
+        {
+            _Values = new Dictionary<string, string>();
+            foreach(tValue t in record.Values)
+                _Values.Add(t.FieldName, t.Value);
+
+            id = record.RecordID;
             stamp = Convert.ToDateTime(_Values[nameof(stamp)]);
+
             PropertyInfo[] props = GetType().GetProperties();
             foreach (var prop in props)
             {
@@ -140,8 +139,10 @@ namespace RustyBoffin.HarmonySite
                     _MissingFields.Add(name);
                 }
             }
-        }
 
+            RaiseObjectChanged();
+        }
+        */
         private static string GetPropertyName<T>(Expression<Func<T>> expression)
         {
             MemberExpression memberExpression = expression.Body as MemberExpression;

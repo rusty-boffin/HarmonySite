@@ -7,7 +7,7 @@ namespace RustyBoffin.HarmonySite.Data
     public class PhotoGallery : HSObject
     {
         public string Name => GetValue(() => Name); //	Album name	text	any value
-        public ListItem Category => GetValue(() => Category); //	Type of gallery	single option from database (dropdowns)	one of these values | Administer
+        public string Category => GetValue(() => Category); //	Type of gallery	single option from database (dropdowns)	one of these values | Administer
         public string Description => GetValue(() => Description);   //	Description	multi-line text box	any value
         public Photograph Feature => GetValue(() => Feature);   //	Feature image	single option from database table	filtered values from scrapbook table
         public string Level => GetValue(() => Level);   //	Visible to	single option from hard-coded set of choices	one of these values

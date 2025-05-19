@@ -11,8 +11,6 @@ namespace RustyBoffin.HarmonySite.Data
         public int KeyValue => GetValue(() => KeyValue);    //	Item	integer	any number
         public string Title => GetValue(() => Title);   //	Title	text	any value
         public string Description => GetValue(() => Description);   //	Description	WYSIWYG (HTML) multi-line text box	any value
-        public string Photo => GetValue(() => Photo);   //	Icon/image	file	files with this specification
-        public string Thumbnail => GetValue(() => Thumbnail);   //	Small icon/image	file	files with this specification
         public int Ranking => GetValue(() => Ranking);	//	Display ranking	integer	any number
 
         internal NewsletterItem(HSSession session)

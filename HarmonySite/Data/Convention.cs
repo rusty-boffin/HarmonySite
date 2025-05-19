@@ -8,10 +8,11 @@ namespace RustyBoffin.HarmonySite.Data
     {
         public int ImportID => GetValue(() => ImportID);    //	ID from imported table	integer	any number			
         public Club Club => GetValue(() => Club);
+        public Region Competition => GetValue(() => Competition);
+        public string Scope => GetValue(() => Scope);
         public int Year => GetValue(() => Year);
         public int Month => GetValue(() => Month);
         public string Instance => GetValue(() => Instance);
-        public Competition Competition => GetValue(() => Competition);
         public string City => GetValue(() => City);
         public string Notes => GetValue(() => Notes);
 

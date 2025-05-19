@@ -9,9 +9,9 @@ namespace RustyBoffin.HarmonySite.Data
     {
         public string Song => GetValue(() => Song); //	Song Title	text	any value							
         public HSCollection<Ensemble> Ensembles => GetValues(() => Ensembles);   //	Ensemble(s)	multiple options from database table	values from ensembles table							
-        public HSCollection<ListItem> Category => GetValues(() => Category); //	Song Category	multiple options from database (dropdowns)	one of these values | Administer							
-        public ListItem Style => GetValue(() => Style);   //	Song Style	single option from database (dropdowns)	one of these values | Administer							
-        public ListItem Voicing => GetValue(() => Voicing);   //	Voicing	single option from database (dropdowns)	one of these values | Administer							
+        public string Category => GetValue(() => Category); //	Song Category	multiple options from database (dropdowns)	one of these values | Administer							
+        public string Style => GetValue(() => Style);   //	Song Style	single option from database (dropdowns)	one of these values | Administer							
+        public string Voicing => GetValue(() => Voicing);   //	Voicing	single option from database (dropdowns)	one of these values | Administer							
         public bool Contestable => GetValue(() => Contestable); //	Contestable Barbershop?	boolean (yes/no)	Yes or No							
         public string Revision => GetValue(() => Revision); //	Sheet Music Revision	text	any value							
         public string Arranger => GetValue(() => Arranger); //	Arranger	text	any value							
@@ -29,7 +29,6 @@ namespace RustyBoffin.HarmonySite.Data
         public string Intro => GetValue(() => Intro);   //	Introduction	multi-line text box	any value							
         public HSCollection<Member> Soloists => GetValues(() => Soloists); //	Soloist(s)	multiple options from database table	values from members table							
         public string TagURL => GetValue(() => TagURL); //	Tag URL on BarbershopTags.com	web (HTTP) link	any value							
-        public HSCollection<RiserStack> Stack => GetValues(() => Stack);   //	Riser stack(s)	multiple options from database table	values from stacks table							
         public string Comments => GetValue(() => Comments); //	Notes for members	WYSIWYG (HTML) multi-line text box	any value							
         public Member PostedBy => GetValue(() => PostedBy); //	Uploaded By	single option from database table	values from members table							
         public string Level => GetValue(() => Level);   //	Access Level required	single option from hard-coded set of choices	one of these values							
@@ -41,8 +40,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string Assessed => GetValue(() => Assessed); //	Singing assessment	single option from hard-coded set of choices	one of these values							
         public string ChoreoAss => GetValue(() => ChoreoAss);   //	Presentation assessment	single option from hard-coded set of choices	one of these values							
         public DateTime IgnoreAss => GetValue(() => IgnoreAss); //	Ignore assessments submitted before	date	any value							
-        public DateTime Emailed => GetValue(() => Emailed); //	Details emailed to members	date	any value							
-        public bool SendEmail => GetValue(() => SendEmail);	//	Send email to members now?	boolean (yes/no)	Yes or No							
+        public DateTime Emailed => GetValue(() => Emailed); //	Details emailed to members	date	any value			
 
         [HSFilter(nameof(SongFilesResource.Song))]
         public HSCollection<SongFilesResource> Resources => GetValues(() => Resources);

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
@@ -16,6 +17,12 @@ namespace RustyBoffin.HarmonySite
             _Session = session;
         }
 
+        public event EventHandler? ObjectChanged;
+        protected void RaiseObjectChanged()
+        {
+            ObjectChanged?.Invoke(this, null);
+        }
+
         protected object? ConvertToType(string s, Type type)
         {
             object? result;
@@ -25,10 +32,7 @@ namespace RustyBoffin.HarmonySite
                 if (string.IsNullOrEmpty(s))
                     result = null;
                 else
-                {
-                    int id = Convert.ToInt32(s);
-                    result = _Session.GetValue(type, id);
-                }
+                    result = _Session.GetValue(type, s);
             }
             else if (type == typeof(Color))
             {
@@ -37,6 +41,12 @@ namespace RustyBoffin.HarmonySite
             else if (type == typeof(bool))
             {
                 result = s == "Yes";
+            }
+            else if (type == typeof(DateTime))
+            {
+                DateTime dt = DateTime.MinValue;
+                DateTime.TryParse(s, out dt);
+                result = dt;
             }
             else
             {

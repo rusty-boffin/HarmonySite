@@ -1,14 +1,15 @@
 ﻿using System.Runtime.CompilerServices;
 
+// Load CSV from https://www.barbershop.org.au/dbpage.php?pg=admin&dbase=regions
+
 [assembly: InternalsVisibleTo("RustyBoffin.HarmonySite.Test")]
 namespace RustyBoffin.HarmonySite.Data
 {
-    [HSTable("regions")]
+    [HSTable("regions", HSTableAttribute.eFeatures.Local)]
     public class Region : HSObject
     {
-        public int ImportID => GetValue(() => ImportID);    //	ID from imported table	integer	any number			
         public string Name => GetValue(() => Name);
-        public int PeakBody => GetValue(() => PeakBody);
+        public Club PeakBody => GetValue(() => PeakBody);
         public bool Competition => GetValue(() => Competition);
         public int Ranking => GetValue(() => Ranking);
         public string AdminNotes => GetValue(() => AdminNotes);

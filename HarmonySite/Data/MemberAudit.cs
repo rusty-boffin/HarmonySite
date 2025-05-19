@@ -11,7 +11,6 @@ namespace RustyBoffin.HarmonySite.Data
         public MemberAuditGroup Group => GetValue(() => Group);   //	Group	single option from database table	values from auditgroups table
         public Event Event => GetValue(() => Event);   //	Event	single option from database table	values from events table
         public string Description => GetValue(() => Description);   //	Full description	WYSIWYG (HTML) multi-line text box	any value
-        public string File => GetValue(() => File); //	Attachment	file (with title)	files with this specification
         public string Link => GetValue(() => Link); //	Web page	web (HTTP) link	any value
         public string Video => GetValue(() => Video);   //	YouTube Video URL	YouTube video ID	any value
         public string Type => GetValue(() => Type); //	Type of response required	single option from hard-coded set of choices	one of these values

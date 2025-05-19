@@ -15,7 +15,9 @@ namespace RustyBoffin.HarmonySite.Data
         public string Other => GetValue(() => Other);   //	Other type	text	any value								
         public string TrackSinger => GetValue(() => TrackSinger);   //	Sung by	text	any value								
         public DateTime Recorded => GetValue(() => Recorded);   //	Date recorded	date	any value								
-        public string Dropbox => GetValue(() => Dropbox);   //	File from Dropbox	file	any file								
+        public string DropboxFile => GetValue(() => DropboxFile);   //	File from Dropbox	file	any file								
+        public string RawLink => GetValue(() => RawLink);   //	
+        public string checksum => GetValue(() => checksum);   //	
         public string Widget => GetValue(() => Widget); //	Embed code (HTML)	multi-line text box	any value								
         public bool TrackDownloads => GetValue(() => TrackDownloads);   //	Track member downloads?	boolean (yes/no)	Yes or No								
         public int Copies => GetValue(() => Copies);    //	Copies purchased	integer	any number								
@@ -29,7 +31,6 @@ namespace RustyBoffin.HarmonySite.Data
         public string Filename => GetValue(() => Filename); //	File	file	files with this specification								
         public string Link => GetValue(() => Link); //	Link to external file	web (HTTP) link	any value								
         public DateTime Emailed => GetValue(() => Emailed); //	Details emailed to members	date	any value								
-        public bool SendEmail => GetValue(() => SendEmail);	//	Send email to members now?	boolean (yes/no)	Yes or No								
 
         [HSFilter(nameof(SongFileDownload.Repfile))]
         public HSCollection<SongFileDownload> Downloads => GetValues(() => Downloads);

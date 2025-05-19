@@ -11,6 +11,8 @@ namespace RustyBoffin.HarmonySite.Data
         public string Description => GetValue(() => Description);   //	Description	WYSIWYG (HTML) multi-line text box	any value
         public int Donation => GetValue(() => Donation);    //	Suggested donation	integer	any currency value (in cents/pence/etc)
         public int Ranking => GetValue(() => Ranking);	//	Display ranking	integer	any number
+        public string Prompt => GetValue(() => Prompt);	//	
+        public HSCollection<Question> Questions => GetValues(() => Questions);	//	
 
         internal DonationTarget(HSSession session)
             : base(session)

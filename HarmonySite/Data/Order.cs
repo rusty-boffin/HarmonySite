@@ -36,7 +36,6 @@ namespace RustyBoffin.HarmonySite.Data
         public bool Dollars => GetValue(() => Dollars); //	Discount type	boolean (yes/no)	Yes (AUD), No (Percent)
         public DiscountCode DiscountRef => GetValue(() => DiscountRef);   //	Discount Reference	single option from database table	values from codes table
         public string Notes => GetValue(() => Notes);   //	Notes	multi-line text box	any value
-        public bool SendEmail => GetValue(() => SendEmail);  //	Notify Customer of status change?	boolean (yes/no)	Yes or No
         public string Surname => GetValue(() => Surname);   //	Surname	text	any value
         public string Greeting => GetValue(() => Greeting); //	First Name	text	any value
         public string Company => GetValue(() => Company);   //	Company Name	text	any value
@@ -51,7 +50,7 @@ namespace RustyBoffin.HarmonySite.Data
         public Member Member => GetValue(() => Member); //	Member	single option from database table	values from members table
         public string OrderType => GetValue(() => OrderType);   //	Transaction type	single option from hard-coded set of choices	one of these values
         public string GUID => GetValue(() => GUID); //	Security code	text	any value
-        public ListItem How => GetValue(() => How);   //	How did you hear about us?	single option from database (dropdowns)	one of these values | Administer
+        public string How => GetValue(() => How);   //	How did you hear about us?	single option from database (dropdowns)	one of these values | Administer
         public double GiftAid => GetValue(() => GiftAid);   //	Gift Aid allocation	decimal number	any number
         public string OrdSpare1 => GetValue(() => OrdSpare1);   //	Spare field 1	text	any value
         public string OrdSpare2 => GetValue(() => OrdSpare2);   //	Spare field 2	text	any value

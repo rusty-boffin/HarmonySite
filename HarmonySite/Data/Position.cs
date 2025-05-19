@@ -7,7 +7,7 @@ namespace RustyBoffin.HarmonySite.Data
     public class Position : HSObject
     {
         public string Name => GetValue(() => Name); //	Position name	text	any value
-        public HSCollection<ListItem> Category => GetValues(() => Category); //	Category	multiple options from database (dropdowns)	one of these values | Administer
+        public string Category => GetValue(() => Category); //	Category	multiple options from database (dropdowns)	one of these values | Administer
         public bool Active => GetValue(() => Active);   //	Active?	boolean (yes/no)	Yes or No
         public string Level => GetValue(() => Level);   //	Access Level required	single option from hard-coded set of choices	one of these values
         public HSCollection<Member> Members => GetValues(() => Members);   //	Members	multiple options from database table	values from members table

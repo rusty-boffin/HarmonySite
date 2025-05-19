@@ -13,12 +13,20 @@ namespace RustyBoffin.HarmonySite.Data
         public HSCollection<Ensemble> Ensembles => GetValues(() => Ensembles);   //	Ensemble(s)	multiple options from database table	values from ensembles table						
         public string Organiser => GetValue(() => Organiser);   //	Organisers	text	any value						
         public string ForGroup => GetValue(() => ForGroup); //	For	text	any value						
+        public string Production => GetValue(() => Production); //	Production	any value					
+        public string Stack => GetValue(() => Stack); //	Riser stack	any value						
         public Club PeakBody => GetValue(() => PeakBody); //	Also show on website	single option from database table	filtered values from clubs table						
         public DateTime start => GetValue(() => start); //	Start date	date	any value						
+        public string RAW_start => GetValue(() => RAW_start); //	Start date	date	any value						
+        public DateTime Frozen => GetValue(() => Frozen); //	Availability frozen from this date	date	any value						
+        public DateTime Apped => GetValue(() => Apped); //	Members notified via App	date	any value						
         public string Time => GetValue(() => Time); //	Start time	time	any value						
         public string MemberTime => GetValue(() => MemberTime); //	Performers meeting time	time	any value						
-        public DateTime Until => GetValue(() => Until); //	Finish date	date	any value						
-        public string Duration => GetValue(() => Duration); //	Duration	text	any value						
+        public DateTime Until => GetValue(() => Until); //	Finish date	date	any value			any value						
+        public string RAW_Until => GetValue(() => RAW_Until); //	Finish date	date	any value						
+        public string Duration => GetValue(() => Duration); //	Duration	text	any value	any value						
+        public string EndTime => GetValue(() => EndTime); //	End time	time	any value								
+        public string Timezone => GetValue(() => Timezone); //	Timezone	time	any value								
         public string MemberDuration => GetValue(() => MemberDuration); //	Performers duration	text	any value						
         public int Ranking => GetValue(() => Ranking);  //	Display ranking	integer	any number						
         public EventCategory Category => GetValue(() => Category); //	Type of event	single option from database table	values from eventcats table						
@@ -30,13 +38,12 @@ namespace RustyBoffin.HarmonySite.Data
         public string Location => GetValue(() => Location); //	General Location	text	any value						
         public string Link => GetValue(() => Link); //	Web page	web (HTTP) link	any value						
         public string Meet => GetValue(() => Meet); //	Where to meet	text	any value						
-        public HSCollection<ListItem> Uniform => GetValues(() => Uniform);   //	Uniform Required	multiple options from database (dropdowns)	one of these values | Administer						
-        public HSCollection<ListItem> Bring => GetValues(() => Bring);   //	Bring with you	multiple options from database (dropdowns)	one of these values | Administer						
+        public string Uniform => GetValue(() => Uniform);   //	Uniform Required	multiple options from database (dropdowns)	one of these values | Administer						
+        public string Bring => GetValue(() => Bring);   //	Bring with you	multiple options from database (dropdowns)	one of these values | Administer						
         public HSCollection<Team> Team => GetValues(() => Team); //	Committee(s)/Team(s)	multiple options from database table	filtered values from committees table						
         public string Food => GetValue(() => Food); //	Food	multi-line text box	any value						
         public string Parking => GetValue(() => Parking);   //	Parking	multi-line text box	any value						
         public string Description => GetValue(() => Description);   //	Other details for members	WYSIWYG (HTML) multi-line text box	any value						
-        public HSCollection<RiserStack> Stack => GetValues(() => Stack);   //	Riser stack(s)	multiple options from database table	values from stacks table						
         public HSCollection<Member> Roster => GetValues(() => Roster); //	Roster/Members on Duty	multiple options from database table	values from members table						
         public string Attendance => GetValue(() => Attendance); //	Attendance/availability tracking	single option from hard-coded set of choices	one of these values						
         public MemberGrouping Grouping => GetValue(() => Grouping); //	Member grouping used for attendance	single option from database table	values from groupings table						
@@ -47,8 +54,7 @@ namespace RustyBoffin.HarmonySite.Data
         public bool RosterAttenders => GetValue(() => RosterAttenders); //	Members who indicate they are available get automatically added to the event's Roster/Members on Duty (above)	boolean (yes/no)	Yes or No																
         public int MaxAttendees => GetValue(() => MaxAttendees);    //	Limit the number of members that can attend	integer	any number						
         public HSCollection<Music> Songs => GetValues(() => Songs);   //	Songs to be sung	multiple options from database table	filtered values from rep table						
-        public DateTime Emailed => GetValue(() => Emailed); //	Event details emailed to members	date	any value						
-        public bool SendEmail => GetValue(() => SendEmail);  //	Send email to members now?	boolean (yes/no)	Yes or No						
+        public DateTime Emailed => GetValue(() => Emailed); //	Event details emailed to members	date	any value							
         public int Fee => GetValue(() => Fee);  //	How much did we get paid?	integer	any currency value (in cents/pence/etc)						
         public int MDFee => GetValue(() => MDFee);  //	How much did we pay our Director?	integer	any currency value (in cents/pence/etc)						
         public Member Coordinator => GetValue(() => Coordinator);   //	Coordinator of this event	single option from database table	values from members table						
@@ -99,13 +105,6 @@ namespace RustyBoffin.HarmonySite.Data
         public string Latitude => GetValue(() => Latitude); //	Latitude	text	any value						
         public string Longitude => GetValue(() => Longitude);   //	Longitude	text	any value						
         public string MapZoom => GetValue(() => MapZoom);	//	Zoom level	single option from hard-coded set of choices	one of these values						
-
-        [HSFilter(nameof(AttendanceAvailability.Event))]
-        public HSCollection<AttendanceAvailability> Attendances => GetValues(() => Attendances);
-        [HSFilter(nameof(EventFilesResource.Event))]
-        public HSCollection<EventFilesResource> Resources => GetValues(() => Resources);
-        [HSFilter(nameof(EventProgramItem.Event))]
-        public HSCollection<EventProgramItem> ProgramItems => GetValues(() => ProgramItems);
 
         internal Event(HSSession session)
             : base(session)

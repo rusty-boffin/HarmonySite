@@ -1,30 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>RustyBoffin.HarmonySite</RootNamespace>
-	<LangVersion>8.0</LangVersion>
+	<LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\BHNZ\clubs.xlsx" />
+    <Compile Remove="HSConnection.cs" />
+    <Compile Remove="IConnection.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Data\BHA\clubs.csv" />
+    <None Remove="Data\BHA\clubs.xlsx" />
+    <None Remove="Data\BHA\regions.csv" />
+    <None Remove="Data\BHNZ\clubs.csv" />
     <None Remove="Data\clubs.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Data\BHA\clubs.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\BHNZ\clubs.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Data\BHA\clubs.csv" />
+    <EmbeddedResource Include="Data\BHA\regions.csv" />
+    <EmbeddedResource Include="Data\BHNZ\clubs.csv" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.3.2" />
-    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="26.1.40" />
-    <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.5" />
+    <PackageReference Include="NLog" Version="5.4.0" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="29.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ORMDataModel1.xpo.diagram">
+      <AutoGen>True</AutoGen>
+    </None>
   </ItemGroup>
 
 </Project>

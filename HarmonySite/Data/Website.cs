@@ -9,17 +9,21 @@ namespace RustyBoffin.HarmonySite.Data
     public class Website : HSObject
     {
         public string WebsiteName => GetValue(() => WebsiteName);
-
+/*
         [HSFilter]
         public HSCollection<BannersHomepage> Banners => GetValues(() => Banners);
         [HSFilter]
         public HSCollection<Event> Events => GetValues(() => Events);
+*/
         [HSFilter]
         public HSCollection<Member> Members => GetValues(() => Members);
+        [HSFilter]
+        public HSCollection<Membership> Memberships => GetValues(() => Memberships);
         [HSFilter]
         public HSCollection<Ensemble> Ensembles => GetValues(() => Ensembles);
         [HSFilter]
         public HSCollection<Club> Clubs => GetValues(() => Clubs);
+/*
         [HSFilter]
         public HSCollection<HitLog> HitLogs => GetValues(() => HitLogs);
         [HSFilter]
@@ -28,6 +32,10 @@ namespace RustyBoffin.HarmonySite.Data
         public HSCollection<LibraryLoan> LibraryLoans => GetValues(() => LibraryLoans);
         [HSFilter]
         public HSCollection<Position> Positions => GetValues(() => Positions);
+*/
+        [HSFilter]
+        public HSCollection<Login> Logins => GetValues(() => Logins);
+/*
         [HSFilter]
         public HSCollection<Music> Songs => GetValues(() => Songs);
         [HSFilter]
@@ -40,13 +48,14 @@ namespace RustyBoffin.HarmonySite.Data
         public HSCollection<WebsitePage> WebsitePages => GetValues(() => WebsitePages);
         [HSFilter]
         public HSCollection<WebsiteParameter> WebsiteParameters => GetValues(() => WebsiteParameters);
-
+*/
         internal Website(HSSession session)
             : base(session)
         {
             Dictionary<string, string> values = new Dictionary<string, string>();
-            values.Add(nameof(WebsiteName), session.Connection.Uri.Host);
-            Initialise(values);
+            id = "0";
+            values.Add(nameof(WebsiteName), session.Uri.Host);
+            Load(values);
         }
     }
 }
