@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RustyBoffin.HarmonySite
 {
@@ -26,7 +27,7 @@ namespace RustyBoffin.HarmonySite
         {
         }
 
-        public virtual void Load()
+        public virtual async Task Load()
         {
             foreach (HSTableLoader tl in LoaderList)
                 tl.Reset();

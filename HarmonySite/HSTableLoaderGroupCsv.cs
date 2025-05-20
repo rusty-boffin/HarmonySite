@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace RustyBoffin.HarmonySite
 {
@@ -9,9 +10,9 @@ namespace RustyBoffin.HarmonySite
         {
         }
 
-        public override void Load()
+        public override async Task Load()
         {
-            base.Load();
+            await base.Load();
 
             foreach (HSTableLoader tl in LoaderList)
             {

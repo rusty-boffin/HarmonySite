@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RustyBoffin.HarmonySite
 {
@@ -112,6 +113,14 @@ namespace RustyBoffin.HarmonySite
         }
 
         private CancellationTokenSource _TokenSource;
+        public async Task LoadAsync()
+        {
+            _TableCount = TableLoaders.Count;
+            List<Task> tasks = new List<Task>();
+            foreach (HSTableLoaderGroup loader in _loaderGroups)
+                tasks.Add(loader.Load());
+            Task.WaitAll(tasks.ToArray());
+        }
         public void Load()
         {
             _TableCount = TableLoaders.Count;
