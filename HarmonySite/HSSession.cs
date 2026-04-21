@@ -113,19 +113,27 @@ namespace RustyBoffin.HarmonySite
         }
 
         private CancellationTokenSource _TokenSource;
-        public async Task LoadAsync()
+
+        public Boolean IsLoaded => _TableCount == 0;
+        public bool Load()
         {
             _TableCount = TableLoaders.Count;
             List<Task> tasks = new List<Task>();
             foreach (HSTableLoaderGroup loader in _loaderGroups)
                 tasks.Add(loader.Load());
             Task.WaitAll(tasks.ToArray());
+            return IsLoaded;
         }
-        public void Load()
+
+        public async Task LoadAsync()
         {
             _TableCount = TableLoaders.Count;
+
+            List<Task> tasks = new List<Task>();
             foreach (HSTableLoaderGroup loader in _loaderGroups)
-                loader.Load();
+                tasks.Add(loader.Load());
+
+            await Task.WhenAll(tasks.ToArray());
         }
 
         public void Shutdown()

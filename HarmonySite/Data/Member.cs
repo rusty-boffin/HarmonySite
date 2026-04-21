@@ -19,7 +19,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string Gender => GetValue(() => Gender); //	Gender	single option from database (dropdowns)	one of these values | Administer			
         public string Height => GetValue(() => Height); //	Height	text	any value			
         public DateTime Birthday => GetValue(() => Birthday);   //	Date of birth	date	any value			
-        public string BirthDate => GetValue(() => BirthDate); //	Birthday	text	any value			
+        public DateTime BirthDate => GetValue(() => BirthDate); //	Birthday	text	any value			
         public string Partner => GetValue(() => Partner);   //	Spouse/Partner	text	any value			
         public DateTime Anniversary => GetValue(() => Anniversary); //	Anniversary	date	any value			
         public string AnniversaryText => GetValue(() => AnniversaryText);   //	Anniversary	text	any value			
@@ -89,6 +89,31 @@ namespace RustyBoffin.HarmonySite.Data
         }
 
         public string FullName =>$"{Greeting} {Surname}".Trim();
+
+        protected static DateTime MemberReferenceAge = new DateTime(DateTime.Now.Year, 1, 1);
+        protected static DateTime SeniorReferenceAge = new DateTime(DateTime.Now.Year, 9, 5);
+        public int ContestAge
+        {
+            get
+            {
+                int age = SeniorReferenceAge.Year - Birthday.Year;
+                // Adjust if the specific date is before the birthday in that year
+                if (SeniorReferenceAge < Birthday.AddYears(age))
+                    age--;
+                return age;
+            }
+        }
+        public int MemberAge
+        {
+            get
+            {
+                int age = MemberReferenceAge.Year - Birthday.Year;
+                // Adjust if the specific date is before the birthday in that year
+                if (MemberReferenceAge < Birthday.AddYears(age))
+                    age--;
+                return age;
+            }
+        }
     }
 
 }

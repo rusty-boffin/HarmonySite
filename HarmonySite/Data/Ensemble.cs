@@ -8,6 +8,11 @@ namespace RustyBoffin.HarmonySite.Data
     [HSTable("ensembles")]
     public class Ensemble : HSObject
     {
+        public static string SeniorQuartetCategory = "senior";
+
+        public enum eType { Quartet, Chorus, Other };
+        private const string cTypeQuartet = "quartet";
+        private const string cTypeChorus = "choir";
         public int ImportID => GetValue(() => ImportID);    //	ID from imported table	integer	any number
         public string Name => GetValue(() => Name); //	Name	text	any value
         public Club Club => GetValue(() => Club); //	Club	single option from database table	filtered values from clubs table
@@ -83,6 +88,28 @@ namespace RustyBoffin.HarmonySite.Data
         internal Ensemble(HSSession session)
             : base(session)
         {
+        }
+
+        public bool IsActive => Expires.AddDays(90) > DateTime.Today;
+        private eType _EType = eType.Other;
+        public eType EnsembleType
+        {
+            get
+            {
+                if (_EType == eType.Other)
+                {
+                        switch (Type)
+                        {
+                            case cTypeChorus:
+                                _EType = eType.Chorus;
+                                break;
+                            case cTypeQuartet:
+                                _EType = eType.Quartet;
+                                break;
+                        }
+                }
+                return _EType;
+            }
         }
     }
 }

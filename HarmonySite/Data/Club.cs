@@ -14,7 +14,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string PeakBodyAbbr => GetValue(() => PeakBodyAbbr); // Abbreviation	text	varchar(192)	-	any value
         public string Type => GetValue(() => Type); // Type	single option from hard-coded set of choices	varchar(192)	Required	one of these values
         public Club PeakBody => GetValue(() => PeakBody);   // Parent body	single option from database table	varchar(192)	-	filtered values from clubs table
-        public Region Region => GetValue(() => Region); // Region	single option from database table	varchar(192)	-	filtered values from regions table
+        public Region? Region => GetValue(() => Region); // Region	single option from database table	varchar(192)	-	filtered values from regions table
         public string ExecName => GetValue(() => ExecName); // Name of governing committee	text	varchar(192)	Required	any value
         public string Address => GetValue(() => Address);   // Postal address	multi-line text box	text	-	any value
         public string Area => GetValue(() => Area); // Area of operation	text	varchar(192)	-	any value
@@ -89,5 +89,6 @@ namespace RustyBoffin.HarmonySite.Data
         }
         public bool IsParentBody => PeakBody == this;
         public bool IsClubAtLarge => Name.Contains("at Large");
+        public bool IsActive => IsParentBody || IsClubAtLarge || Expires.AddDays(60) > DateTime.Today;
     }
 }

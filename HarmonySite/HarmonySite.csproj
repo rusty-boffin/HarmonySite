@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>RustyBoffin.HarmonySite</RootNamespace>
 	<LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -27,10 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="33.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.5" />
-    <PackageReference Include="NLog" Version="5.4.0" />
-    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="29.2.4" />
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.6" />
+    <PackageReference Include="NLog" Version="6.1.2" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="33.1.49" />
   </ItemGroup>
 
   <ItemGroup>
