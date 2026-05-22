@@ -10,7 +10,7 @@ namespace RustyBoffin.HarmonySite.Data
 
         public Member Member => GetValue(() => Member); //	Member	single option from database table	values from members table
         public int ImportID => GetValue(() => ImportID);    //	ID from imported table	integer	any number
-        public int? MemberID => GetValue(() => MemberID); //	Member ID	text	any value
+        public string MemberID => GetValue(() => MemberID); //	Member ID	text	any value
         public Club Club => GetValue(() => Club); //	Club	single option from database table	filtered values from clubs table
         public Region? Region => GetValue(() => Region); //	Region	single option from database table	values from regions table
         public string Photo => GetValue(() => Photo);   //	Photograph	file	files with this specification

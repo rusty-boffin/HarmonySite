@@ -24,6 +24,8 @@ namespace RustyBoffin.HarmonySite.Data
 
         [HSFilter]
         public HSCollection<Club> Clubs => GetValues(() => Clubs);
+        [HSFilter]
+        public HSCollection<Order> Orders => GetValues(() => Orders);
 /*
         [HSFilter]
         public HSCollection<HitLog> HitLogs => GetValues(() => HitLogs);

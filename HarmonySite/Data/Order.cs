@@ -7,7 +7,7 @@ namespace RustyBoffin.HarmonySite.Data
     [HSTable("orders")]
     public class Order : HSObject
     {
-        public Member Customer => GetValue(() => Customer); //	Member	single option from database table	values from members table
+        public Club Customer => GetValue(() => Customer); //	Member	single option from database table	values from members table
         public string Status => GetValue(() => Status); //	Status	single option from hard-coded set of choices	one of these values
         public int Shipping => GetValue(() => Shipping);    //	Shipping	integer	any currency value (in cents/pence/etc)
         public int Total => GetValue(() => Total);  //	Order Total	integer	any currency value (in cents/pence/etc)
