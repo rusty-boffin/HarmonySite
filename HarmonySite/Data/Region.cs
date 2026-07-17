@@ -8,6 +8,7 @@ namespace RustyBoffin.HarmonySite.Data
     [HSTable("regions", HSTableAttribute.eFeatures.Local)]
     public class Region : HSObject
     {
+        public int ImportID => GetValue(() => ImportID);    // ID from imported table	integer	int(11)	-	any number
         public string Name => GetValue(() => Name);
         public Club PeakBody => GetValue(() => PeakBody);
         public bool Competition => GetValue(() => Competition);

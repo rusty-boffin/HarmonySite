@@ -87,8 +87,11 @@ namespace RustyBoffin.HarmonySite.Data
             : base(session)
         {
         }
+        [HSCalculatedField]
         public bool IsParentBody => PeakBody == this;
+        [HSCalculatedField]
         public bool IsClubAtLarge => Name.Contains("at Large");
+        [HSCalculatedField]
         public bool IsActive => IsParentBody || IsClubAtLarge || Expires.AddDays(60) > DateTime.Today;
     }
 }

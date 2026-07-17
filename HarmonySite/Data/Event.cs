@@ -19,6 +19,7 @@ namespace RustyBoffin.HarmonySite.Data
         public DateTime start => GetValue(() => start); //	Start date	date	any value						
         public string RAW_start => GetValue(() => RAW_start); //	Start date	date	any value						
         public DateTime Frozen => GetValue(() => Frozen); //	Availability frozen from this date	date	any value						
+        public string RAW_Frozen => GetValue(() => RAW_Frozen); //	Start date	date	any value						
         public DateTime Apped => GetValue(() => Apped); //	Members notified via App	date	any value						
         public string Time => GetValue(() => Time); //	Start time	time	any value						
         public string MemberTime => GetValue(() => MemberTime); //	Performers meeting time	time	any value						
@@ -105,6 +106,9 @@ namespace RustyBoffin.HarmonySite.Data
         public string Latitude => GetValue(() => Latitude); //	Latitude	text	any value						
         public string Longitude => GetValue(() => Longitude);   //	Longitude	text	any value						
         public string MapZoom => GetValue(() => MapZoom);	//	Zoom level	single option from hard-coded set of choices	one of these values						
+        public string Waitlist => GetValue(() => Waitlist); //	Waitlist	any value						
+        public Member WaitlistWasFull => GetValue(() => WaitlistWasFull); //	Waitlist was full	any value						
+        public string WaitlistLevel => GetValue(() => Stack); //	Riser stack	any value						
 
         internal Event(HSSession session)
             : base(session)

@@ -87,11 +87,12 @@ namespace RustyBoffin.HarmonySite.Data
             : base(session)
         {
         }
-
+        [HSCalculatedField]
         public string FullName =>$"{Greeting} {Surname}".Trim();
 
         protected static DateTime MemberReferenceAge = new DateTime(DateTime.Now.Year, 1, 1);
         protected static DateTime SeniorReferenceAge = new DateTime(DateTime.Now.Year, 9, 5);
+        [HSCalculatedField]
         public int ContestAge
         {
             get
@@ -103,6 +104,7 @@ namespace RustyBoffin.HarmonySite.Data
                 return age;
             }
         }
+        [HSCalculatedField]
         public int MemberAge
         {
             get

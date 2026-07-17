@@ -55,6 +55,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string OrdSpare1 => GetValue(() => OrdSpare1);   //	Spare field 1	text	any value
         public string OrdSpare2 => GetValue(() => OrdSpare2);   //	Spare field 2	text	any value
         public string OrdSpare3 => GetValue(() => OrdSpare3);	//	Spare field 3	text	any value
+        public string CancelReason => GetValue(() => CancelReason); //	Cancel Reason	text	any value						
 
         [HSFilter(nameof(OrderItem.OrderID))]
         public HSCollection<OrderItem> Items => GetValues(() => Items);

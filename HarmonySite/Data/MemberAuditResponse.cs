@@ -13,6 +13,7 @@ namespace RustyBoffin.HarmonySite.Data
         public DateTime Date => GetValue(() => Date);   //	Last updated	date	any value
         public Member Recorder => GetValue(() => Recorder); //	Entered by	single option from database table	values from members table
         public string Notes => GetValue(() => Notes);	//	Admin Notes	WYSIWYG (HTML) multi-line text box	any value
+        public string Filename => GetValue(() => Filename); //	Filename	text	any value
 
         internal MemberAuditResponse(HSSession session)
             : base(session)

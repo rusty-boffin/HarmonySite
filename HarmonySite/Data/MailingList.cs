@@ -16,6 +16,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string Level => GetValue(() => Level);   //	Regular member access	single option from hard-coded set of choices	one of these values
         public bool Public => GetValue(() => Public);   //	The list contains (or will contain) NON-members of the club (friends, supporters, past members, etc)?	boolean (yes/no)	Yes or No
         public int Ranking => GetValue(() => Ranking);	//	Display ranking	integer	any number
+        public string Type => GetValue(() => Type);   //	Type	text	any value
 
         internal MailingList(HSSession session)
             : base(session)

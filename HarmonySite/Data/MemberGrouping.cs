@@ -13,6 +13,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string Postcode => GetValue(() => Postcode); //	Postcode	text	any value		
         public string Gender => GetValue(() => Gender); //	Gender	multiple options from database (dropdowns)	one of these values | Administer		
         public string Club => GetValue(() => Club); //	Club	single option from hard-coded set of choices	one of these values		
+        public string Region => GetValue(() => Region); //	Region	single option from hard-coded set of choices	one of these values		
         public string[] Type => GetList(() => Type); //	Type/role	multiple options from restricted database	one of these values		
         public string[] Level => GetList(() => Level);   //	Level	multiple options from restricted database	one of these values		
         public string[] Status => GetList(() => Status); //	Status	multiple options from restricted database	one of these values		
@@ -37,6 +38,8 @@ namespace RustyBoffin.HarmonySite.Data
         public bool SortDesc2 => GetValue(() => SortDesc2); //	Sort descending	boolean (yes/no)	Yes or No		
         public string Sorting3 => GetValue(() => Sorting3); //	Sort by	single option from hard-coded set of choices	one of these values		
         public bool SortDesc3 => GetValue(() => SortDesc3);	//	Sort descending	boolean (yes/no)	Yes or No		
+        public string COVIDVaccine => GetValue(() => COVIDVaccine); //	COVID Vaccine	single option from hard-coded set of choices	one of these values		
+        public int COVIDShots => GetValue(() => COVIDShots); //	COVID Shots	single option from hard-coded set of choices	one of these values		
 
         [HSFilter(nameof(EmailsSavedSent.Grouping))]
         public HSCollection<EmailsSavedSent> Emails => GetValues(() => Emails);

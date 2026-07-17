@@ -25,7 +25,7 @@ namespace RustyBoffin.HarmonySite
 
         protected object? ConvertToType(string s, Type type)
         {
-            object? result;
+            object? result = null;
 
             if (type.IsSubclassOf(typeof(HSObject)))
             {
@@ -48,7 +48,7 @@ namespace RustyBoffin.HarmonySite
                 DateTime.TryParse(s, out dt);
                 result = dt;
             }
-            else
+            else if(!string.IsNullOrWhiteSpace(s))
             {
                 TypeConverter converter = TypeDescriptor.GetConverter(type);
                 result = converter.ConvertFromString(null, CultureInfo.InvariantCulture, s);

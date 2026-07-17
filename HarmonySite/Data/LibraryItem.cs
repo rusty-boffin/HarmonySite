@@ -24,6 +24,8 @@ namespace RustyBoffin.HarmonySite.Data
         public string MemFilename => GetValue(() => MemFilename);   //	Attachment	file (with title)	files with this specification
         public string Filename => GetValue(() => Filename); //	Admin Attachment	file (with title)	files with this specification
         public int Ranking => GetValue(() => Ranking);	//	Ranking	integer	any number
+        public int CurrentValue => GetValue(() => CurrentValue); //	Riser stack	any value						
+        public int RepValue => GetValue(() => RepValue); //	Riser stack	any value						
 
         internal LibraryItem(HSSession session)
             : base(session)

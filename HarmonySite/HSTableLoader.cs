@@ -12,7 +12,7 @@ namespace RustyBoffin.HarmonySite
         protected HSSession Session { get; }
         public string TableName { get; }
         protected CancellationToken CancellationToken { get; }
-        protected HSTable Table { get; }
+        public HSTable Table { get; }
         public int Count => Table.Count;
         public int LoadProgress 
         { 
@@ -23,6 +23,7 @@ namespace RustyBoffin.HarmonySite
         public event ProgressChangedEventHandler? ProgressChanged;
         public event EventHandler? Loaded;
         public event PropertyChangedEventHandler? PropertyChanged;
+        public bool IsLoaded { get; private set; } = false;
 
         protected HSTableLoader(HSSession session, string tableName, CancellationToken cancellationToken, HSTable table)
         {
@@ -49,11 +50,13 @@ namespace RustyBoffin.HarmonySite
         }
         protected void RaiseLoaded()
         {
+            IsLoaded = true;
             Loaded?.Invoke(this, EventArgs.Empty);
         }
 
         public void Reset()
         {
+            IsLoaded = false;
             Table.Reset();
             RaiseProgressChanged(0);
         }

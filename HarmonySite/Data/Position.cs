@@ -19,6 +19,8 @@ namespace RustyBoffin.HarmonySite.Data
         public Club Club => GetValue(() => Club); //	Club	single option from database table	filtered values from clubs table
 //        public HSCollection<string> DBs => GetValues(() => DBs);   //	Administration areas	multiple options from hard-coded set of choices	one of these values
         public string FullDuties => GetValue(() => FullDuties);	//	Full description of this position	WYSIWYG (HTML) multi-line text box	any value
+        public string ExternalEmail => GetValue(() => ExternalEmail); //	External Email	text	any value
+        public string DBs => GetValue(() => DBs); //	Password	text	any value
 
         [HSFilter(nameof(Team.Positions))]
         public HSCollection<Team> Teams => GetValues(() => Teams);

@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,9 +21,13 @@ namespace RustyBoffin.HarmonySite
         public event EventHandler? OnLoaded;
 
         public event ProgressChangedEventHandler? ProgressChanged;
+        private HttpClient _Client;
 
         public HSSession(string name, string url, string username, string password)
         {
+            _Client = new HttpClient();
+            _Client.DefaultRequestHeaders.Accept.Clear();
+
             HSTableLoaderGroupWeb? tlgw = null;
             HSTableLoaderGroupCsv? tlgc = null;
             Name = name;
@@ -35,7 +41,7 @@ namespace RustyBoffin.HarmonySite
             Website = new Website(this);
 
             Assembly hsa = Assembly.GetAssembly(typeof(HSObject));
-            foreach (TypeInfo ti in hsa.DefinedTypes.Where(r => !r.IsAbstract && (r.BaseType == typeof(HSObject))))
+            foreach (TypeInfo ti in hsa.DefinedTypes.Where(r => !r.IsAbstract && (r.BaseType == typeof(HSObject))).OrderBy(r => r.Name))
             {
                 Type tp = ti;
                 Type tb = typeof(HSTable<>);
@@ -75,7 +81,7 @@ namespace RustyBoffin.HarmonySite
                                 tlgc.Add(tl);
                                 break;
                             case HSTableAttribute.eFeatures.Large:
-                                HSTableLoaderGroup tlg = new HSTableLoaderGroupWeb(this, _TokenSource.Token);
+                                HSTableLoaderGroup tlg = new HSTableLoaderGroupWeb(this, _TokenSource.Token, _Client);
                                 tlg.Add(tl);
                                 _loaderGroups.Add(tlg);
                                 break;
@@ -84,7 +90,7 @@ namespace RustyBoffin.HarmonySite
                                     tlgw = null;
                                 if (tlgw == null)
                                 {
-                                    tlgw = new HSTableLoaderGroupWeb(this, _TokenSource.Token);
+                                    tlgw = new HSTableLoaderGroupWeb(this, _TokenSource.Token, _Client);
                                     _loaderGroups.Add(tlgw);
                                 }
                                 tlgw.Add(tl);

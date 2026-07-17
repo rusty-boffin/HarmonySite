@@ -35,6 +35,7 @@ namespace RustyBoffin.HarmonySite.Data
         public string Latitude => GetValue(() => Latitude); //	Latitude	text	any value
         public string Longitude => GetValue(() => Longitude);   //	Longitude	text	any value
         public string MapZoom => GetValue(() => MapZoom);	//	Zoom level	single option from hard-coded set of choices	one of these values
+        public string XeroTrackingCat => GetValue(() => XeroTrackingCat); //	Xero Tracking Category	text	any value
 
         internal Location(HSSession session)
             : base(session)

@@ -42,6 +42,16 @@ namespace RustyBoffin.HarmonySite.Data
         public DateTime IgnoreAss => GetValue(() => IgnoreAss); //	Ignore assessments submitted before	date	any value							
         public DateTime Emailed => GetValue(() => Emailed); //	Details emailed to members	date	any value			
 
+        public string Subtitle => GetValue(() => Subtitle); //	Subtitle	text	any value							
+        public string Collection => GetValue(() => Collection); //	Collection	text	any value							
+        public int CollNum => GetValue(() => CollNum); //	Collection number	text	any value							
+        public string DropboxFolder => GetValue(() => DropboxFolder); //	Dropbox folder	text	any value							
+        public string GoogleDrive => GetValue(() => GoogleDrive); //	Google Drive	text	any value							
+        public string BoxCom => GetValue(() => BoxCom); //	Box.com	text	any value							
+        public string Stack => GetValue(() => Stack); //	Stack	text	any value							
+        public string Approved => GetValue(() => Approved); //	Approved	text	any value							
+        public DateTime Apped => GetValue(() => Apped); //	Arranger	text	any value							
+
         [HSFilter(nameof(SongFilesResource.Song))]
         public HSCollection<SongFilesResource> Resources => GetValues(() => Resources);
 

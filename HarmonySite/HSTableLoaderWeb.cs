@@ -7,12 +7,11 @@ using System.Xml;
 
 namespace RustyBoffin.HarmonySite
 {
-
     internal interface ITableLoaderWeb
     {
-        Task<bool> Load(HttpClient client, string token);
+        Task RunAsync(HSTableLoaderGroupWeb group, string authenticationToken);
+        bool IsLoaded { get; }
     }
-
     internal class HSTableLoaderWeb<T> : HSTableLoader<T>, ITableLoaderWeb where T : HSObject
     {
         private Dictionary<string, string> _BrowsePayload;
@@ -28,72 +27,81 @@ namespace RustyBoffin.HarmonySite
                     { "output","xml" },
                     { "token", "" },
                     { "table", tableName },
-                    {"n", "1000" },
+                    {"n", "1024" },
                     { "startrec", "1" }
                 };
         }
 
-        public async Task<bool> Load(HttpClient client, string token)
+        public async Task RunAsync(HSTableLoaderGroupWeb group, string authenticationToken)
         {
-            _BrowsePayload["token"] = token;
+            _BrowsePayload["token"] = authenticationToken;
 
-            Dictionary<int, Dictionary<string, string>> result = new Dictionary<int, Dictionary<string, string>>();
-            int start = 1;
-            int available = 0;
-            bool loop = false;
-            do
+            Reset();
+            var offset = 1;
+            bool more = true;
+
+            while (more && !CancellationToken.IsCancellationRequested)
             {
-                if (token == null)
-                    return false;
-
-                _BrowsePayload["startrec"] = start.ToString();
+                _BrowsePayload["startrec"] = offset.ToString();
 
                 var content = new FormUrlEncodedContent(_BrowsePayload);
 
-                _Logger.Debug(await content.ReadAsStringAsync());
-                HttpResponseMessage reply = await client.PostAsync(_Uri, content, CancellationToken);
-                if (!reply.IsSuccessStatusCode)
-                    return false;
-
-                string XML = await reply.Content.ReadAsStringAsync();
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.LoadXml(XML);
-                if (xDoc.DocumentElement != null)
+                string description = await content.ReadAsStringAsync(CancellationToken);
+                try
                 {
-                    string? s = xDoc.DocumentElement.Attributes["status"]?.Value;
-                    switch (s)
-                    {
-                        case "okay":
-                            XmlNode? records = xDoc.DocumentElement.SelectSingleNode("//records");
-                            available = Convert.ToInt32(records.Attributes["available"].Value);
-                            start += Convert.ToInt32(records.Attributes["count"].Value);
-                            _Logger.Trace("{0} : {1}/{2}", TableName, start-1, available);
+                    var response = await group.SendDataRequestAsync(_Uri, content, CancellationToken);
+                    response.EnsureSuccessStatusCode();
 
-                            foreach (XmlNode record in records.ChildNodes)
-                            {
-                                Dictionary<string, string> values = new Dictionary<string, string>();
-                                foreach (XmlNode value in record.ChildNodes)
+                    string XML = await response.Content.ReadAsStringAsync();
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.LoadXml(XML);
+                    if (xDoc.DocumentElement == null)
+                    {
+                        _Logger.Error(@"{2} {0} : Null DocElement, '{1}'", TableName, XML, group._ID);
+                        return;
+                    }
+                    else
+                    {
+                        string? s = xDoc.DocumentElement.Attributes["status"]?.Value;
+                        switch (s)
+                        {
+                            case "okay":
+                                XmlNode? records = xDoc.DocumentElement.SelectSingleNode("//records");
+                                int available = Convert.ToInt32(records.Attributes["available"].Value);
+                                offset += Convert.ToInt32(records.Attributes["count"].Value);
+                                _Logger.Trace("{3} {0} : {1}/{2}", TableName, offset - 1, available, group._ID);
+
+                                foreach (XmlNode record in records.ChildNodes)
                                 {
-                                    if (!values.ContainsKey(value.Name))
-                                        values.Add(value.Name, value.InnerText);
+                                    Dictionary<string, string> values = new Dictionary<string, string>();
+                                    foreach (XmlNode value in record.ChildNodes)
+                                    {
+                                        if (!values.ContainsKey(value.Name))
+                                            values.Add(value.Name, value.InnerText);
+                                    }
+                                    CreateObject(values);
                                 }
-                                CreateObject(values);
-                            }
-                            RaiseProgressChanged(Count, available);
-                            loop = start <= available;
-                            break;
-                        case "error":
-                            _Logger.Debug(XML);
-                            return false;
-                        default:
-                            _Logger.Debug(XML);
-                            throw new Exception(string.Format("Unknown status {0}", s));
+                                RaiseProgressChanged(Count, available);
+                                more = offset <= available && available > 0;
+                                if (!more)
+                                    RaiseLoaded();
+                                break;
+                            case "error":
+                                _Logger.Error(@"{2} {0} : status=error, '{1}'", TableName, XML, group._ID);
+                                return;
+                            default:
+                                _Logger.Error(@"{2} {0} : status=???, '{1}'", TableName, XML, group._ID);
+                                throw new Exception(string.Format("Unknown status {0}", s));
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    _Logger.Error(@"{0} {1} : Exception '{2}'", group._ID, TableName, ex.Message);
+                    group.AddDeadLetter($"{TableName}-page", description, ex);
+                    more = false;
+                }
             }
-            while (loop && !CancellationToken.IsCancellationRequested);
-            RaiseLoaded();
-            return true;
         }
     }
 }

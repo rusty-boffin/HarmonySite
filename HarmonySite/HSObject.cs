@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -109,6 +110,26 @@ namespace RustyBoffin.HarmonySite
         internal void Load(Dictionary<string, string> values)
         {
             _Values = values;
+
+            PropertyInfo[] props = GetType().GetProperties();
+            foreach (var prop in props.Where(r => r.Name != nameof(id) && r.Name != nameof(stamp) && r.GetCustomAttribute<HSCalculatedFieldAttribute>() == null))
+            {
+                string name = string.Format("{0}.{1}", GetType().Name, prop.Name);
+                if (!_Values.ContainsKey(prop.Name) && !_ExtraFields.Contains(name) && (prop.GetCustomAttribute<HSFilterAttribute>() == null))
+                {
+                    _Logger.Warn("Remove {0}", name);
+                    _ExtraFields.Add(name);
+                }
+            }
+            foreach (var kvp in _Values)
+            {
+                string name = string.Format("{0}.{1}", GetType().Name, kvp.Key);
+                if (!props.Any(r => r.Name == kvp.Key) && !_MissingFields.Contains(name) && (kvp.Key != nameof(id)) && (kvp.Key != nameof(stamp)))
+                {
+                    _Logger.Warn("Add {0}", name);
+                    _MissingFields.Add(name);
+                }
+            }
         }
         /*
         internal void Load(tRecord record)

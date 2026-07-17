@@ -38,12 +38,13 @@ namespace RustyBoffin.HarmonySite.Data
         public DateTime Registration => GetValue(() => Registration);   //	Registration date	date	any value
         public DateTime Resigned => GetValue(() => Resigned);   //	Date left	date	any value
         public DateTime Rejoined => GetValue(() => Rejoined);   //	Date re-joined	date	any value
+        public DateTime Effective => GetValue(() => Effective);   //	Date effective	date	any value
         public DateTime TimeStamp => GetValue(() => TimeStamp);	//	Last updated	date	any value
+        public PrivacyProfile PrivacyProfile => GetValue(() => PrivacyProfile); //	PrivacyProfile	text	any value
 
         internal Membership(HSSession session)
             : base(session)
         {
         }
     }
-
 }

@@ -31,6 +31,8 @@ namespace RustyBoffin.HarmonySite.Data
         public string Filename => GetValue(() => Filename); //	File	file	files with this specification								
         public string Link => GetValue(() => Link); //	Link to external file	web (HTTP) link	any value								
         public DateTime Emailed => GetValue(() => Emailed); //	Details emailed to members	date	any value								
+        public string PurLink => GetValue(() => PurLink); //	Riser stack	any value						
+
 
         [HSFilter(nameof(SongFileDownload.Repfile))]
         public HSCollection<SongFileDownload> Downloads => GetValues(() => Downloads);

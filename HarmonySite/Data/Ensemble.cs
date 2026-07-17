@@ -77,6 +77,7 @@ namespace RustyBoffin.HarmonySite.Data
         public Position PosMarketingPos => GetValue(() => PosMarketingPos);   //	Marketing Manager	single option from database table	values from positions table
         public Member PosMarketingMem => GetValue(() => PosMarketingMem);   //	Marketing Manager member	single option from database table	values from members table
         public string PosMarketingEmail => GetValue(() => PosMarketingEmail);	//	Marketing Manager email	email link	any value
+        public string MemViewLevel => GetValue(() => MemViewLevel); //	Password	text	any value
 
         [HSFilter(nameof(MemberGrouping.Ensembles))]
         public HSCollection<MemberGrouping> MemberGroups => GetValues(() => MemberGroups);
@@ -90,8 +91,10 @@ namespace RustyBoffin.HarmonySite.Data
         {
         }
 
+        [HSCalculatedField]
         public bool IsActive => Expires.AddDays(90) > DateTime.Today;
         private eType _EType = eType.Other;
+        [HSCalculatedField]
         public eType EnsembleType
         {
             get
